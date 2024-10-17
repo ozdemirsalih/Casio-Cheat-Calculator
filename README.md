@@ -5,7 +5,7 @@
 
 ***I've originally created this mod to cheat on my exams during my collage years(back in 2017), but never actually used it for cheating. So first and foremostly, I need to disclose that I don't condone cheating in academia or in any educational environment, neither do I encourage anyone using this mod to cheat on their exams. This project is here simply for the sake of sharing and educational purposes.***
 
-The working principle might be simplified as a "physical virus", since the ESP8285 is not controlling the calculator over a digital interface, but it's rahter simulating physical button pushes. The fx-82MS has exposed pads marked as ***KI1, KI2, KI3, KI4, KI5, KI6, KI7, KI8, KO1, KO2, KO3, KO4, KO5, KO6, AND KO7*** as it can be seen in the picture below;
+The working principle might be simplified as a "physical virus", since the ESP8285 is not controlling the calculator over a digital interface, but it's rahter simulating physical button pushes. The fx-82MS has exposed pads marked as ***KI1, KI2, KI3, KI4, KI5, KI6, KI7, KI8, KO1, KO2, KO3, KO4, KO5, KO6, and KO7*** as it can be seen in the picture below;
 
 ![Casio fx-82MS PCB](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Casio%20fx82MS%20Circuit.jpg?raw=true)
 
@@ -32,13 +32,18 @@ The ESP8285 acts as an Access Point and as a websocket server to serve a webpage
 
 ![UI](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Cheating-Calculator-UI%20.jpg?raw=true)
 
-As you can see, I've also created font for this prıject which is a pixel perfect copy of the font that's used in the Casio fx-82MS. You can find the .ttf in the repository.
+As you can see, I've also created a font for this project which is a pixel perfect copy of the font that's used in the Casio fx-82MS. You can find the .ttf file in the repository. This font also enables controlling the calculator directly from your keyboard. Here's the key mapping;
+
+![Font Key Map](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/fx-82MS%20Font%20Table%20-%201.png?raw=true)
+![Font Key Map](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/fx-82MS%20Font%20Table%20-%202.png?raw=true)
+![Font Key Map](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/fx-82MS%20Font%20Table%20-%203.png?raw=true)
+![Font Key Map](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/fx-82MS%20Font%20Table%20-%204.png?raw=true)
 
 I also wrote a whole calibration tool for the ***BMX055***'s accelerometer. In which you can control every single function and every single register of the accelerometer, including Self-Test, Fast Compensation, Slow Compensation(High Pass Filter), I2C Watchdog, Bandwidth, Range, Offsets, and NVM(Non Volatile Memory). You can also observe the the acceleration values, the temperature, the roll, and the pitch of the accelerometer in real time(up to 2000fps). As it can be seen in the screenshot below;
 
 ![Accelerometer UI](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Cheating-Calculator-Accelerometer-UI.jpg?raw=true)
 
-As of now, the gyroscope and the magnetometer are not implemented into the code, but they'll be added soon.
+As of now, the gyroscope and the magnetometer haven't been implemented into the code yet, but they'll be added soon.
 
 #### Note: In order to get 2000fps from the accelerometer, the ESP8285's I2C buffer size needs to be increased to 192 bytes, as explained below;
 
@@ -50,3 +55,8 @@ As of now, the gyroscope and the magnetometer are not implemented into the code,
 `#define BUFFER_LENGTH 128`
 ***to***
 `#define BUFFER_LENGTH 192`
+
+#### Note: Default SSID is ***my_calculator*** & the password is ***123456789***. You can change these by editing the lines below;
+
+* `const char* ssid = "my_calculator";`
+* `const char* password = "123456789";`
