@@ -1,4 +1,4 @@
-# fx82MSESP8285Mod
+# Casio Cheat Calculator
 ## Modding a Casio fx-82MS calculator with an ESP8285 to make it controllable over WiFi.
 
 ***I'm not able to find a job over online applications. They said uploading some of the things I've created onto GitHub could help, so here we go with the first one.***
