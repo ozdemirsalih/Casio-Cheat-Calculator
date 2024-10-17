@@ -5,4 +5,48 @@
 
 ***I've originally created this mod to cheat on my exams during my collage years(back in 2017), but never actually used it for cheating. So first and foremostly, I need to disclose that I don't condone cheating in academia or in any educational environment, neither do I encourage anyone using this mod to cheat on their exams. This project is here simply for the sake of sharing and educational purposes.***
 
-This 
+The working principle might be simplified as a "physical virus", since the ESP8285 is not controlling the calculator over a digital interface, but it's rahter simulating physical button pushes. The fx-82MS has exposed pads marked as ***KI1, KI2, KI3, KI4, KI5, KI6, KI7, KI8, KO1, KO2, KO3, KO4, KO5, KO6, AND KO7*** as it can be seen in the picture below;
+
+![Casio fx-82MS PCB](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Casio%20fx82MS%20Circuit.jpg?raw=true)
+
+If you connect any one of the ***KI*** pads to any one of the ***KO*** pads, you'll see that calculator's CPU will register it as a button push and it'll display a character. For instance, if you connect ***KI1*** to ***KO1***, the calculator will register it as if it is a physical push on the button "1" of the calculator and it'll show the number "1" on its display.
+
+By exploiting this feature, we're able write anything we want onto the calculator display by just creating connections between these pads.
+
+And to create these connections at our will, we can use a microcontroller, even better we can use a WiFi cabaple microcontroller which enables us to control our calculator over WiFi and even over internet if you want to go to that length. So with this purpose, I've designed a PCB which includes an ***ESP8285***, 2 ***74HC4051*** ICs and a ***SN74LVC1G3157*** to create the desired connections between the exposed pads. As it can be seen in the picture below;
+
+![Assembled Circuit](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Casio-Cheating-Calculator-Assembled.jpg?raw=true)
+
+You might be asking yourself, "Okay, the calculator is controllable over WiFi now, which can help you cheat on an exam, but how're you gonna send the question to your friend on their computer while you're in an exam?", good thing you asked! There's also a ***BMX055*** from ***Bosch Sensortec***, which is a 9-Axis IMU, which we can use its accelerometer as a Morse Code median. So you can send the questions to your friend by tapping Morse Code onto your calculator. Here's a close up of the assembled circut, the ***BMX055*** is on the left side;
+
+![Assembled Circuit Close-up](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Casio-Cheating-Calculator-Assembled-Close-up.jpg?raw=true)
+
+Here's the top and bottom images of the PCB design;
+
+![PCB Top](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/PCB%20Top%20Image.png?raw=true)
+![PCB Bottom](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/PCB%20Bottom%20Image.png?raw=true)
+
+You can find the Eagle project files and the gerber files in the repository.
+
+The ESP8285 acts as an Access Point and as a websocket server to serve a webpage, in which you can control the calculator via its UI. Here's the screenshot of the UI;
+
+![UI](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Cheating-Calculator-UI%20.jpg?raw=true)
+
+As you can see, I've also created font for this prıject which is a pixel perfect copy of the font that's used in the Casio fx-82MS. You can find the .ttf in the repository.
+
+I also wrote a whole calibration tool for the ***BMX055***'s accelerometer. In which you can control every single function and every single register of the accelerometer, including Self-Test, Fast Compensation, Slow Compensation(High Pass Filter), I2C Watchdog, Bandwidth, Range, Offsets, and NVM(Non Volatile Memory). You can also observe the the acceleration values, the temperature, the roll, and the pitch of the accelerometer in real time(up to 2000fps). As it can be seen in the screenshot below;
+
+![Accelerometer UI](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Cheating-Calculator-Accelerometer-UI.jpg?raw=true)
+
+As of now, the gyroscope and the magnetometer are not implemented into the code, but they'll be added soon.
+
+#### Note: In order to get 2000fps from the accelerometer, the ESP8285's I2C buffer size needs to be increased to 192 bytes, as explained below;
+
+* On MacOS: /Users/<username>/Library/Arduino15/packages/esp8266/hardware/esp8266/3.0.1/libraries/Wire/Wire.h
+* On Windows: C:\Users\<username>\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.1\libraries\Wire\Wire.h
+* On Linux: /home/<username>/.arduino15/packages/esp8266/hardware/esp8266/3.0.1/libraries/Wire/Wire.h
+
+***Change***
+`#define BUFFER_LENGTH 128`
+***to***
+`#define BUFFER_LENGTH 192`
