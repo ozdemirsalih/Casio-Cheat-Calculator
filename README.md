@@ -17,11 +17,9 @@ And to create these connections at our will, we can use a microcontroller, even 
 
 ![Assembled Circuit](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Casio-Cheating-Calculator-Assembled.jpg?raw=true)
 
-You might be asking yourself, "Okay, the calculator is controllable over WiFi now, which can help you cheat on an exam, but how're you gonna send the question to your friend on their computer while you're in an exam?", good thing you asked! There's also a ***BMX055*** from ***Bosch Sensortec***, which is a 9-Axis IMU, which we can use its accelerometer as a Morse Code median. So you can send the questions to your friend by tapping Morse Code onto your calculator. Here's a close up of the assembled circut, the ***BMX055*** is on the left side;
+You might be asking yourself, "Okay, the calculator is controllable over WiFi now, which can help you cheat on an exam, but how're you gonna send the question to your friend on their computer while you're in an exam?", good thing you asked! There's also a ***BMX055*** from ***Bosch Sensortec***, which is a 9-Axis IMU, which we can use its accelerometer as a Morse Code median. So you can send the questions to your friend by tapping Morse Code onto your calculator.
 
-![Assembled Circuit Close-up](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/Casio-Cheating-Calculator-Assembled-Close-up.jpg?raw=true)
-
-Here's the top and bottom images of the PCB design;
+Here's the top and bottom images of the PCB design with its pin map to the exposed calculator pads, along with pinout for programming, debugging, and charging the Li-Ion battery(there's no battery charging IC is involved in the design, only a DW01A for battery protection, so an external charger is needed, e.g. TP4056);
 
 ![PCB Top](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/PCB%20Top%20Image.png?raw=true)
 ![PCB Bottom](https://github.com/ozdemirsalih/Casio-Cheat-Calculator/blob/main/PCB%20Bottom%20Image.png?raw=true)
@@ -47,16 +45,22 @@ As of now, the gyroscope and the magnetometer haven't been implemented into the 
 
 #### Note: In order to get 2000fps from the accelerometer, the ESP8285's I2C buffer size needs to be increased to 192 bytes, as explained below;
 
-* On MacOS: /Users/<username>/Library/Arduino15/packages/esp8266/hardware/esp8266/3.0.1/libraries/Wire/Wire.h
-* On Windows: C:\Users\<username>\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.1\libraries\Wire\Wire.h
-* On Linux: /home/<username>/.arduino15/packages/esp8266/hardware/esp8266/3.0.1/libraries/Wire/Wire.h
+* On MacOS: /Users/{username}/Library/Arduino15/packages/esp8266/hardware/esp8266/3.0.1/libraries/Wire/Wire.h
+* On Windows: C:\Users\{username}\AppData\Local\Arduino15\packages\esp8266\hardware\esp8266\3.0.1\libraries\Wire\Wire.h
+* On Linux: /home/{username}/.arduino15/packages/esp8266/hardware/esp8266/3.0.1/libraries/Wire/Wire.h
 
-***Change***
-`#define BUFFER_LENGTH 128`
-***to***
-`#define BUFFER_LENGTH 192`
+Replace 
+```C
+#define BUFFER_LENGTH 128
+```
+with
+```C
+#define BUFFER_LENGTH 192
+```
 
-#### Note: Default SSID is ***my_calculator*** & the password is ***123456789***. You can change these by editing the lines below;
+#### Note: The default SSID & password of the Access Point is as listed below;
 
-* `const char* ssid = "my_calculator";`
-* `const char* password = "123456789";`
+```C++
+const char* ssid = "my_calculator";
+const char* password = "123456789";
+```
